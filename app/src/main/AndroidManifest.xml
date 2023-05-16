@@ -10,18 +10,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ProjetoCelularRoom"
+        android:theme="@style/Theme.ProjetoAluno"
         tools:targetApi="31">
         <activity
             android:name=".views.AlunoView"
-            android:exported="false">
+            android:exported="false"
+            android:label="Cadastrar Aluno">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".views.CursoView"
-            android:exported="false">
+            android:exported="false"
+            android:label="Cadastrar Curso">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -29,15 +31,15 @@
         <activity
             android:name=".views.CursoList"
             android:exported="false"
-            android:label="@string/title_activity_marca_list"
-            android:theme="@style/Theme.ProjetoCelularRoom.NoActionBar">
+            android:theme="@style/Theme.ProjetoAluno.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".views.AlunoList"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.ProjetoAluno.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

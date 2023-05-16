@@ -1,7 +1,6 @@
 package com.example.projetoaluno.views;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -35,79 +34,72 @@ public class AlunoView extends AppCompatActivity {
         setContentView(binding.getRoot());
         db = LocalDatabase.getDatabase(getApplicationContext());
 
-        spnCursos = binding.spnMarcas;
-        dbAlunoID = getIntent().getIntExtra(
-                "CELULAR_SELECIONADO_ID", -1);
+        spnCursos = binding.spnCursos;
+        dbAlunoID = getIntent().getIntExtra("ALUNO_SELECIONADO_ID", -1);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(dbAlunoID >= 0){
+        if (dbAlunoID >= 0) {
             preencheAluno();
         } else {
-            binding.btnExcluirModelo.setVisibility(View.GONE);
+            binding.btnExcluirAluno.setVisibility(View.GONE);
         }
-        preencheMarcas();
+        preencheCursos();
     }
 
     private void preencheAluno() {
-        dbAluno = db.alunoModel().getCel(dbAlunoID);
-        binding.edtModelo.setText(dbAluno.getCursoID());
+        dbAluno = db.alunoModel().getAlunoById(dbAlunoID);
+        binding.edtNome.setText(dbAluno.getNome());
+        binding.edtEmail.setText(dbAluno.getEmail());
+        binding.edtTelefone.setText(dbAluno.getTelefone());
     }
 
-    private void preencheMarcas() {
+    private void preencheCursos() {
         cursos = db.cursoModel().getAll();
-        cursosAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, cursos);
+        cursosAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cursos);
         spnCursos.setAdapter(cursosAdapter);
-        if(dbAluno != null) {
+        if (dbAluno != null) {
             spnCursos.setSelection(dbAluno.getCursoID() - 1);
         }
     }
 
     public void salvarAluno(View view) {
-        String modelo = binding.edtModelo.getText().toString();
-        String novaMarca = "";
+        String nome = binding.edtNome.getText().toString();
+        String email = binding.edtEmail.getText().toString();
+        String telefone = binding.edtTelefone.getText().toString();
+        String novoCurso = "";
 
-        if(spnCursos.getSelectedItem() != null){
-            novaMarca = spnCursos.getSelectedItem().toString();
+        if (spnCursos.getSelectedItem() != null) {
+            novoCurso = spnCursos.getSelectedItem().toString();
         }
-        if(modelo.equals("")){
-            Toast.makeText(this, "O modelo é obrigatório", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(novaMarca.equals("")) {
-            Toast.makeText(this, "Entre com uma Marca.", Toast.LENGTH_SHORT).show();
+        if (nome.equals("") || email.equals("") || telefone.equals("") || novoCurso.equals("")) {
+            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Aluno novoAluno = new Aluno();
-        novoAluno.setCurso(modelo);
-        novoAluno.setCursoID(cursos.get(
-                spnCursos.getSelectedItemPosition()).getCursoID());
-        if(dbAluno != null){
+        novoAluno.setNome(nome);
+        novoAluno.setEmail(email);
+        novoAluno.setTelefone(telefone);
+        novoAluno.setCursoID(cursos.get(spnCursos.getSelectedItemPosition()).getId());
+        if (dbAluno != null) {
             novoAluno.setId(dbAlunoID);
             db.alunoModel().update(novoAluno);
-            Toast.makeText(this, "Aluno atualizado com sucesso.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Aluno atualizado com sucesso.", Toast.LENGTH_SHORT).show();
         } else {
             db.alunoModel().insertAll(novoAluno);
-            Toast.makeText(this, "Aluno cadastrado com sucesso.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Aluno cadastrado com sucesso.", Toast.LENGTH_SHORT).show();
         }
         finish();
     }
+
     public void excluirAluno(View view) {
         new AlertDialog.Builder(this)
                 .setTitle("Exclusão de Aluno")
-                .setMessage("Deseja excluir esse celular?")
-                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        excluir();
-                    }
-                })
+                .setMessage("Deseja excluir esse aluno?")
+                .setPositiveButton("Sim", (dialog, which) -> excluir())
                 .setNegativeButton("Não", null)
                 .show();
     }
@@ -117,6 +109,7 @@ public class AlunoView extends AppCompatActivity {
         Toast.makeText(this, "Aluno excluído com sucesso.", Toast.LENGTH_SHORT).show();
         finish();
     }
+
     public void voltar(View view) {
         finish();
     }

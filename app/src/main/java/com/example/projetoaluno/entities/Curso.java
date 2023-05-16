@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Curso {
     @PrimaryKey(autoGenerate = true)
-    private int cursoID;
+    private int id;
     private String nomeCurso;
     private int qtdeHoras;
 
@@ -17,8 +17,8 @@ public class Curso {
         this.qtdeHoras = qtdeHoras;
     }
 
-    public void setCursoID(int cursoID) {
-        this.cursoID = cursoID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setNomeCurso(String nomeCurso) {
@@ -29,8 +29,8 @@ public class Curso {
         this.qtdeHoras = qtdeHoras;
     }
 
-    public int getCursoID() {
-        return cursoID;
+    public int getId() {
+        return id;
     }
 
     public String getNomeCurso() {
@@ -44,7 +44,7 @@ public class Curso {
     @Override
     public String toString() {
         return "Curso{" +
-                "cursoID=" + cursoID +
+                "cursoID=" + id +
                 ", nomeCurso='" + nomeCurso + '\'' +
                 ", qtdeHoras=" + qtdeHoras +
                 '}';

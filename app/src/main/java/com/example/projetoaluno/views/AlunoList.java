@@ -9,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projetoaluno.database.LocalDatabase;
 import com.example.projetoaluno.databinding.ActivityAlunoListBinding;
-import com.example.projetoaluno.entities.AlunoCurso;
+import com.example.projetoaluno.entities.Aluno;
 
 import java.util.List;
 
 public class AlunoList extends AppCompatActivity {
     private ActivityAlunoListBinding binding;
     private LocalDatabase db;
-    private List<AlunoCurso> alunoCursoList;
+    private List<Aluno> alunoCursoList;
     private ListView listViewAluno;
     private Intent edtIntent;
 
@@ -30,27 +30,25 @@ public class AlunoList extends AppCompatActivity {
         db = LocalDatabase.getDatabase(getApplicationContext());
         listViewAluno = binding.listCelular;
 
-        binding.btnHomeCel.setOnClickListener(v -> finish());
-        binding.btnAddCel.setOnClickListener(v -> startActivity(new Intent(AlunoList.this, AlunoView.class)));
+        binding.btnHomeAluno.setOnClickListener(v -> finish());
+        binding.btnAddAluno.setOnClickListener(v -> startActivity(new Intent(AlunoList.this, AlunoView.class)));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         edtIntent = new Intent(this, AlunoView.class);
-        preencheCelulares();
+        preencheAlunos();
     }
 
-    private void preencheCelulares() {
-        alunoCursoList = db.alunoCursoModel().getAllCelMarca();
-        ArrayAdapter<AlunoCurso> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, alunoCursoList);
+    private void preencheAlunos() {
+        alunoCursoList = db.alunoModel().getAll();
+        ArrayAdapter<Aluno> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunoCursoList);
         listViewAluno.setAdapter(adapter);
 
         listViewAluno.setOnItemClickListener((adapter1, view, position, id) -> {
-            AlunoCurso celSelecionado = alunoCursoList.get(position);
-            edtIntent.putExtra("CELULAR_SELECIONADO_ID",
-                    celSelecionado.getAlunoID());
+            Aluno alunoSelecionado = alunoCursoList.get(position);
+            edtIntent.putExtra("ALUNO_SELECIONADO_ID", alunoSelecionado.getId());
             startActivity(edtIntent);
         });
     }
