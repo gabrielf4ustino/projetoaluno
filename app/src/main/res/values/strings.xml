@@ -10,6 +10,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="email">Email</string>
     <string name="curso">Curso</string>
+    <string name="horas">Carga Horaria</string>
     <string name="nome">Nome</string>
     <string name="telefone">Telefone</string>
     <string name="excluir">Excluir</string>

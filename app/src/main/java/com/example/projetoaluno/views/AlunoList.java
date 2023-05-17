@@ -28,7 +28,7 @@ public class AlunoList extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         db = LocalDatabase.getDatabase(getApplicationContext());
-        listViewAluno = binding.listCelular;
+        listViewAluno = binding.listAluno;
 
         binding.btnHomeAluno.setOnClickListener(v -> finish());
         binding.btnAddAluno.setOnClickListener(v -> startActivity(new Intent(AlunoList.this, AlunoView.class)));

@@ -38,16 +38,25 @@ public class CursoView extends AppCompatActivity {
     private void getDBMarca() {
         dbCurso = db.cursoModel().getCursoById(dbCursoID);
         binding.edtCurso.setText(dbCurso.getNomeCurso());
+        binding.edtHour.setText(String.valueOf(dbCurso.getQtdeHoras()));
     }
 
     public void salvarCurso(View view) {
         String nomeMarca = binding.edtCurso.getText().toString();
+        String qtdHoras = binding.edtHour.getText().toString();
+        int number;
         if (nomeMarca.equals("")) {
             Toast.makeText(this, "Adicione um curso.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Curso thisCurso = new Curso(nomeMarca, 0);
+        try {
+            number = Integer.parseInt(qtdHoras);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Coloque apenas numeros na Carga Horaria", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Curso thisCurso = new Curso(nomeMarca, number);
 
         if (dbCurso != null) {
             thisCurso.setId(dbCursoID);

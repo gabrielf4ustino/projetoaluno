@@ -22,6 +22,7 @@ public class CursoList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityCursoListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -39,13 +40,13 @@ public class CursoList extends AppCompatActivity {
     }
     private void preencheCursos() {
         cursos = db.cursoModel().getAll();
-        ArrayAdapter<Curso> marcasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cursos);
-        listViewCursos.setAdapter(marcasAdapter);
+        ArrayAdapter<Curso> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cursos);
+        listViewCursos.setAdapter(adapter);
 
-        listViewCursos.setOnItemClickListener((parent, view, position, id) -> {
-            Curso marcaselecionada = cursos.get(position);
+        listViewCursos.setOnItemClickListener((adapter1, view, position, id) -> {
+            Curso cursoSelecionada = cursos.get(position);
             edtIntent.putExtra("CURSO_SELECIONADA_ID",
-                    marcaselecionada.getId());
+                    cursoSelecionada.getId());
             startActivity(edtIntent);
         });
     }
