@@ -43,7 +43,7 @@ public class CursoView extends AppCompatActivity {
     public void salvarCurso(View view) {
         String nomeMarca = binding.edtCurso.getText().toString();
         if (nomeMarca.equals("")) {
-            Toast.makeText(this, "Adicione uma marca.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Adicione um curso.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -52,18 +52,18 @@ public class CursoView extends AppCompatActivity {
         if (dbCurso != null) {
             thisCurso.setId(dbCursoID);
             db.cursoModel().update(thisCurso);
-            Toast.makeText(this, "Marca atualizada com sucesso.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Curso atualizado com sucesso.", Toast.LENGTH_SHORT).show();
         } else {
             db.cursoModel().insertAll(thisCurso);
-            Toast.makeText(this, "Marca criada com sucesso.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Curso criado com sucesso.", Toast.LENGTH_SHORT).show();
         }
         finish();
     }
 
     public void excluirCurso(View view) {
         new AlertDialog.Builder(this)
-                .setTitle("Exclusão de Marca")
-                .setMessage("Deseja excluir essa marca?")
+                .setTitle("Exclusão de Curso")
+                .setMessage("Deseja excluir esse curso?")
                 .setPositiveButton("Sim", (dialog, which) -> excluir())
                 .setNegativeButton("Não", null)
                 .show();
@@ -72,9 +72,9 @@ public class CursoView extends AppCompatActivity {
     private void excluir() {
         try {
             db.cursoModel().delete(dbCurso);
-            Toast.makeText(this, "Marca excluída com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Curso excluído com sucesso", Toast.LENGTH_SHORT).show();
         } catch (SQLiteConstraintException e) {
-            Toast.makeText(this, "Impossível excluir marca com celulares cadastrados", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Impossível excluir curso com alunos cadastrados", Toast.LENGTH_SHORT).show();
         }
         finish();
     }

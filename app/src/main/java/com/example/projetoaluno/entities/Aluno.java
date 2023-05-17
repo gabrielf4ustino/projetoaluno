@@ -64,12 +64,11 @@ public class Aluno {
 
     @Override
     public String toString() {
-        return "Aluno{" +
-                "alunoID=" + id +
-                ", cursoID=" + cursoID +
-                ", nomeAluno='" + nome + '\'' +
-                ", emailAluno='" + email + '\'' +
-                ", telefoneAluno='" + telefone + '\'' +
+        return
+                "   nome - " + nome + "   [" + id + "]"+ '\n' +
+                "   Curso - " + cursoID + '\n' +
+                "   email - " + email + '\n' +
+                "   telefone - " + telefone + '\n' +
                 '}';
     }
 }
